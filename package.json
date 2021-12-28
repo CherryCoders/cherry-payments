@@ -2,7 +2,7 @@
   "name": "cherry-payments",
   "version": "1.0.0",
   "description": "",
-  "main": "src/Client.js",
+  "main": "src/Index.js",
   "scripts": {
     "test": "jest",
     "jest": "jest --init"

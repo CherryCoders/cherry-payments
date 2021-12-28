@@ -15,10 +15,10 @@ npm install eduardommelo/express-services
 ```
 
 ```js
-const MethodsPayment = require("./src/Client");
+const CherryPayments = require("cherry-payments");
 
 // Client id e secret você pega em: https://developer.paypal.com/developer/applications
-const checkout = new MethodsPayment({
+const checkout = new CherryPayments({
   methods: {
     // aqui você define os metodos de pagamento aqui dentro
     paypal: {
