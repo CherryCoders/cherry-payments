@@ -17,23 +17,27 @@ npm install eduardommelo/express-services
 ```js
 const MethodsPayment = require("./src/Client");
 
+// Client id e secret você pega em: https://developer.paypal.com/developer/applications
 const checkout = new MethodsPayment({
   methods: {
-    // cada metodo de pagamento pode variar sua forma de configurar
+    // aqui você define os metodos de pagamento aqui dentro
     paypal: {
-      token: "Token de autenticaçao", // token de auth
-      sandbox: true, // ativar modo sandbox ou não
+      account: {
+        clientId: "Client id account",
+        secret: "secret token paypal account",
+      },
+      sandbox: true, // habilitar modo sandbox do modulo de pagamento
       redirect: {
-        cancel: "url de redirect",
-        accept: "url de redirect ",
+        cancel: "https://teste.example/pagamento_cancelado", // redirecionamentos
+        accept: "https://teste.example/pagamento_aprovado",
       },
     },
   },
 });
 
-const paypal = checkout.add("paypal");
-
 (async () => {
+  // Adicionar metodo de pagamento
+  const paypal = await checkout.add("paypal");
   /* Criar um pedido de pagamento, caso seja AUTHORIZE o intent ele vai gerar um pagamento que ira aguardar o vendedor aprovar o pagamento, CAPTURE para já autorizar pagamento assim que o comprador aprova
     mais informações em: https://developer.paypal.com/docs/api/orders/v2/
     */

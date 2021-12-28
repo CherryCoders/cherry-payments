@@ -5,11 +5,13 @@ module.exports = class Client {
   constructor(config = {}) {
     this.methods = config?.methods || false;
     this._avaliateRequireds();
+    this.typeMethod = "";
   }
 
-  add(method) {
+  async add(method) {
+    this.typeMethod = method.toLowerCase();
     const manager = new RequestManager(this, method.toLowerCase());
-    return manager.base();
+    return await manager.base();
   }
 
   _avaliateRequireds() {
@@ -17,5 +19,14 @@ module.exports = class Client {
       return new Error(
         "Informe metodo de pagamento para configurar sua autenticação"
       );
+  }
+
+  set token(token) {
+    console.log(this.typeMethod);
+    this.methods[this.typeMethod].token = token;
+  }
+
+  get token() {
+    return this.methods[this.typeMethod].token;
   }
 };

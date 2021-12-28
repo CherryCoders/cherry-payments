@@ -10,19 +10,30 @@ const {
  *  Modules de pagamento
  */
 const Paypal = require("../modules/paypal/Paypal");
+const AuthPaypal = require("../modules/paypal/util/AuthPaypal");
 
 module.exports = class RequestManager {
   constructor(client, method) {
     this.client = client;
     this.method = method.toLowerCase();
 
+    this.tokenAuth = client.methods[this.method].token;
+
     // Modulos de paagmento instanciados
     this._checkout = {
-      paypal: new Paypal(client),
+      paypal: {
+        instance: new Paypal(client),
+        accounting: new AuthPaypal(client),
+      },
     };
   }
 
-  base(auth = "Authorization") {
+  async base(auth = "Authorization") {
+    if (this._checkout[this.method].accounting)
+      this.client.methods[this.method].token = await this._checkout[
+        this.method
+      ].accounting.token();
+
     let scope = AUTHORIZATIONS[this.method];
     scope[auth] = interpolate("{{ }}", scope[auth], {
       token: this.client.methods[this.method].token,
@@ -48,7 +59,8 @@ module.exports = class RequestManager {
           ],
       headers: scope,
     });
-    return this._checkout[this.method].init(instances);
+    return await this._checkout[this.method].instance.init(instances);
   }
-  fetch() {}
+
+  _onAuthenticate() {}
 };

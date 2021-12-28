@@ -30,3 +30,7 @@ module.exports.interpolate = function (key = "{{ }}", context, scope) {
       ] || ctx
   );
 };
+
+module.exports.btoa = function (char) {
+  return Buffer.from(String(char)).toString("base64");
+};
