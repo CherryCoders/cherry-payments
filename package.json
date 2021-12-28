@@ -1,0 +1,19 @@
+{
+  "name": "cherry-payments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/Client.js",
+  "scripts": {
+    "test": "jest",
+    "jest": "jest --init"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.5"
+  }
+}
