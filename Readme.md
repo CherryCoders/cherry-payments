@@ -21,6 +21,11 @@ const CherryPayments = require("cherry-payments");
 const checkout = new CherryPayments({
   methods: {
     // aqui você define os metodos de pagamento aqui dentro
+    mercadopago: {
+      sandbox: true,
+      token:
+        "Access token da aplicação mercado pago",
+    },
     paypal: {
       account: {
         clientId: "Client id account",
@@ -36,7 +41,56 @@ const checkout = new CherryPayments({
 });
 
 (async () => {
-  // Adicionar metodo de pagamento
+  //MERCADOPAGO
+  // Adicionar metodo de pagamento (MercadoPago)
+  const mercadopago = await checkout.add('mercadopago')
+
+  // Criar usuario testes (sandbox)
+  const user = await mercadopago.users.create({
+    site_id: "MLB",
+  })
+
+  // editar saldo do usuario de teste
+  const userAmout = await mercadopago.users.updateAmount({
+      id: user.data.id,
+      amount: 50000.23
+    }) 
+  // listar usuarios testes
+  const list = await mercadopago.users.list()
+  // criar preference
+  const payment = await mercadopago.preferences.create({
+    items: [
+      {
+        title: "teste produto",
+        description: "Descriçao do meu produto",
+        quantity: 1,
+        unit_price: 10,
+      },
+    ],
+    external_reference: "ABCD",
+  });
+
+  // consultar a preference (da preference criada)
+  const merchant = await mercadopago.merchants.fetch('4463600701')
+
+  // criar pagamento 
+  const createPayment = await mercadopago.payments.create({
+    additional_info:{
+      items: [ {
+        id: '4462022673',
+        title: "teste produto",
+        description: "Descriçao do meu produto",
+        quantity: 1,
+        unit_price: 1,
+      }]},
+      payment_method_id: 'visa',
+      transaction_amount: 1
+    
+  })
+
+  // ======== FIM MERCADOPAGO
+
+  // Adicionar metodo de pagamento (Paypal)
   const paypal = await checkout.add("paypal");
   /* Criar um pedido de pagamento, caso seja AUTHORIZE o intent ele vai gerar um pagamento que ira aguardar o vendedor aprovar o pagamento, CAPTURE para já autorizar pagamento assim que o comprador aprova
     mais informações em: https://developer.paypal.com/docs/api/orders/v2/
@@ -71,7 +125,7 @@ const checkout = new CherryPayments({
 
 ## Módulos de pagamento disponíveis no momento
 
-- Paypal
-- MercadoPago (BREVE)
+- PayPal [Documentação](https://developer.paypal.com/api/rest/)
+- MercadoPago [Documentação](https://www.mercadopago.com.br/developers/pt/reference)
 - PagSeguro (BREVE)
 - PicPay (BREVE)

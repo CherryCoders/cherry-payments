@@ -8,9 +8,9 @@ module.exports.BASE_URIS = {
   },
   mercadopago: {
     production: "https://api.mercadopago.com/",
-    sandbox: "",
-    version: "v1",
-  },
+    sandbox: "https://api.mercadopago.com/",
+    version: false,
+  }
 };
 
 module.exports.AUTHORIZATIONS = {
@@ -18,7 +18,10 @@ module.exports.AUTHORIZATIONS = {
     "Content-Type": "application/json",
     Authorization: "Bearer {{token}}",
   },
-  mercadopago: {},
+  mercadopago: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer {{token}}"
+  },
 };
 
 module.exports.interpolate = function (key = "{{ }}", context, scope) {

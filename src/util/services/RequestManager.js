@@ -11,6 +11,7 @@ const {
  */
 const Paypal = require("../modules/paypal/Paypal");
 const AuthPaypal = require("../modules/paypal/util/AuthPaypal");
+const MercadoPago = require("../modules/mercadopago/MercadoPago")
 
 module.exports = class RequestManager {
   constructor(client, method) {
@@ -25,16 +26,21 @@ module.exports = class RequestManager {
         instance: new Paypal(client),
         accounting: new AuthPaypal(client),
       },
+      mercadopago: {
+        instance: new MercadoPago(client)
+      }
     };
   }
 
   async base(auth = "Authorization") {
+
     if (this._checkout[this.method].accounting)
       this.client.methods[this.method].token = await this._checkout[
         this.method
       ].accounting.token();
 
     let scope = AUTHORIZATIONS[this.method];
+    
     scope[auth] = interpolate("{{ }}", scope[auth], {
       token: this.client.methods[this.method].token,
     });
@@ -59,6 +65,8 @@ module.exports = class RequestManager {
           ],
       headers: scope,
     });
+
+    
     return await this._checkout[this.method].instance.init(instances);
   }
 

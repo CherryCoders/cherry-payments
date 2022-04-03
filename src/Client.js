@@ -22,7 +22,6 @@ module.exports = class Client {
   }
 
   set token(token) {
-    console.log(this.typeMethod);
     this.methods[this.typeMethod].token = token;
   }
 
