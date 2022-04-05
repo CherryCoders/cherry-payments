@@ -15,10 +15,10 @@ npm install eduardommelo/cherry-payments
 ```
 
 ```js
-const CherryPayments = require("cherry-payments");
+const { Client } = require("cherry-payments");
 
 // Client id e secret você pega em: https://developer.paypal.com/developer/applications
-const checkout = new CherryPayments({
+const checkout = new Client({
   methods: {
     // aqui você define os metodos de pagamento aqui dentro
     mercadopago: {
