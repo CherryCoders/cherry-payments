@@ -16,7 +16,7 @@ module.exports = class Client {
 
   _avaliateRequireds() {
     if (!this.methods)
-      return new Error(
+      throw new Error(
         "Informe metodo de pagamento para configurar sua autenticação"
       );
   }

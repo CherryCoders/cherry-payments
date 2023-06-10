@@ -11,7 +11,7 @@ const {
  */
 const Paypal = require("../modules/paypal/Paypal");
 const AuthPaypal = require("../modules/paypal/util/AuthPaypal");
-const MercadoPago = require("../modules/mercadopago/MercadoPago")
+const MercadoPago = require("../modules/mercadopago/MercadoPago");
 
 module.exports = class RequestManager {
   constructor(client, method) {
@@ -27,23 +27,25 @@ module.exports = class RequestManager {
         accounting: new AuthPaypal(client),
       },
       mercadopago: {
-        instance: new MercadoPago(client)
-      }
+        instance: new MercadoPago(client),
+      },
     };
   }
 
-  async base(auth = "Authorization") {
-
+  async base(auth = "Authorization", integration = "x-integrator-id") {
     if (this._checkout[this.method].accounting)
       this.client.methods[this.method].token = await this._checkout[
         this.method
       ].accounting.token();
 
     let scope = AUTHORIZATIONS[this.method];
-    
+
     scope[auth] = interpolate("{{ }}", scope[auth], {
       token: this.client.methods[this.method].token,
     });
+
+    if ((scope[integration] = this.client.methods[this.method].integrationId))
+      scope[integration] = this.client.methods[this.method].integrationId;
 
     const instances = axios.create({
       baseURL: BASE_URIS[this.method].version
@@ -66,7 +68,6 @@ module.exports = class RequestManager {
       headers: scope,
     });
 
-    
     return await this._checkout[this.method].instance.init(instances);
   }
 
