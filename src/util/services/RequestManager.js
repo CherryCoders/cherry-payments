@@ -44,8 +44,9 @@ module.exports = class RequestManager {
       token: this.client.methods[this.method].token,
     });
 
-    if ((scope[integration] = this.client.methods[this.method].integrationId))
-      scope[integration] = this.client.methods[this.method].integrationId;
+    if (this.client.methods[this.method].integrationId)
+      if ((scope[integration] = this.client.methods[this.method].integrationId))
+        scope[integration] = this.client.methods[this.method].integrationId;
 
     const instances = axios.create({
       baseURL: BASE_URIS[this.method].version
