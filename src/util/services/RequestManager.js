@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { _ } = require("lodash");
 
 const {
   AUTHORIZATIONS,
@@ -38,7 +39,7 @@ module.exports = class RequestManager {
         this.method
       ].accounting.token();
 
-    let scope = AUTHORIZATIONS[this.method];
+    let scope = _.cloneDeep(structuredClone(AUTHORIZATIONS[this.method]));
 
     scope[auth] = interpolate("{{ }}", scope[auth], {
       token: this.client.methods[this.method].token,

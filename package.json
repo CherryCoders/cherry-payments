@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
-    "form-data": "^4.0.0"
+    "form-data": "^4.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "jest": "^27.4.5"
