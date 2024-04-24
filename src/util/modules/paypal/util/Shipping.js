@@ -1,3 +1,4 @@
+const { BASE_URIS } = require("../../../presentation/Constants");
 const AuthPaypal = require("./AuthPaypal");
 
 module.exports = class Shipping {
@@ -15,10 +16,21 @@ module.exports = class Shipping {
     };
   }
 
-  async trasckersBatch(data) {
+  async trackersBatch(data) {
     await this._authentication.token();
 
+    this.request.defaults.baseURL = `${
+      this.client.methods.paypal.sandbox
+        ? BASE_URIS.paypal[this.client].sandbox
+        : BASE_URIS.paypal[this.client].production
+    }/v1/`;
     const response = await this.request.post("shipping/trackers-batch ", data);
+
+    this.request.defaults.baseURL = `${
+      this.client.methods.paypal.sandbox
+        ? BASE_URIS.paypal[this.client].sandbox
+        : BASE_URIS.paypal[this.client].production
+    }/v2/`;
     return response;
   }
 };
