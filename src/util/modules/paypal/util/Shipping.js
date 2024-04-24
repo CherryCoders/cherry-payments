@@ -30,7 +30,7 @@ module.exports = class Shipping {
       this.client.methods.paypal.sandbox
         ? BASE_URIS.paypal.sandbox
         : BASE_URIS.paypal.production
-    }/v2/`;
+    }v2/`;
     return response;
   }
 };
