@@ -21,15 +21,15 @@ module.exports = class Shipping {
 
     this.request.defaults.baseURL = `${
       this.client.methods.paypal.sandbox
-        ? BASE_URIS.paypal[this.client].sandbox
-        : BASE_URIS.paypal[this.client].production
+        ? BASE_URIS.paypal.sandbox
+        : BASE_URIS.paypal.production
     }/v1/`;
     const response = await this.request.post("shipping/trackers-batch ", data);
 
     this.request.defaults.baseURL = `${
       this.client.methods.paypal.sandbox
-        ? BASE_URIS.paypal[this.client].sandbox
-        : BASE_URIS.paypal[this.client].production
+        ? BASE_URIS.paypal.sandbox
+        : BASE_URIS.paypal.production
     }/v2/`;
     return response;
   }
