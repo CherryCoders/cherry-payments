@@ -23,8 +23,7 @@ const checkout = new Client({
     // aqui você define os metodos de pagamento aqui dentro
     mercadopago: {
       sandbox: true,
-      token:
-        "Access token da aplicação mercado pago",
+      token: "Access token da aplicação mercado pago",
     },
     paypal: {
       account: {
@@ -43,20 +42,20 @@ const checkout = new Client({
 (async () => {
   //MERCADOPAGO
   // Adicionar metodo de pagamento (MercadoPago)
-  const mercadopago = await checkout.add('mercadopago')
+  const mercadopago = await checkout.add("mercadopago");
 
   // Criar usuario testes (sandbox)
   const user = await mercadopago.users.create({
     site_id: "MLB",
-  })
+  });
 
   // editar saldo do usuario de teste
   const userAmout = await mercadopago.users.updateAmount({
-      id: user.data.id,
-      amount: 50000.23
-    }) 
+    id: user.data.id,
+    amount: 50000.23,
+  });
   // listar usuarios testes
-  const list = await mercadopago.users.list()
+  const list = await mercadopago.users.list();
   // criar preference
   const payment = await mercadopago.preferences.create({
     items: [
@@ -71,22 +70,24 @@ const checkout = new Client({
   });
 
   // consultar a preference (da preference criada)
-  const merchant = await mercadopago.merchants.fetch('4463600701')
+  const merchant = await mercadopago.merchants.fetch("4463600701");
 
-  // criar pagamento 
+  // criar pagamento
   const createPayment = await mercadopago.payments.create({
-    additional_info:{
-      items: [ {
-        id: '4462022673',
-        title: "teste produto",
-        description: "Descriçao do meu produto",
-        quantity: 1,
-        unit_price: 1,
-      }]},
-      payment_method_id: 'visa',
-      transaction_amount: 1
-    
-  })
+    additional_info: {
+      items: [
+        {
+          id: "4462022673",
+          title: "teste produto",
+          description: "Descriçao do meu produto",
+          quantity: 1,
+          unit_price: 1,
+        },
+      ],
+    },
+    payment_method_id: "visa",
+    transaction_amount: 1,
+  });
 
   // ======== FIM MERCADOPAGO
 
@@ -120,6 +121,11 @@ const checkout = new Client({
 
   // pegar informações do pedido criado do cliente
   await paypal.payouts.get("token de pagamento");
+
+  // atualizar o status de entrega de uma transação
+  await paypal.shipping.trasckersBatch({
+    trackers: [{ transaction_id: "77V700257E896184K", status: "DELIVERED" }],
+  });
 })();
 ```
 
