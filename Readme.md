@@ -190,6 +190,12 @@ const checkout = new Client({
     },
   });
 
+  // listar todos os detalhes dos pagamentos
+  const response = await paypal.payments.showDetails();
+
+  // pegar o pagamento especifico
+  const response = await paypal.payments.showDetail("PAYMENT_ID");
+
   // atualizar o status de entrega de uma transação
   await paypal.shipping.trasckersBatch({
     trackers: [{ transaction_id: "77V700257E896184K", status: "DELIVERED" }],
