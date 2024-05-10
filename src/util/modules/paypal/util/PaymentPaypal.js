@@ -1,4 +1,5 @@
 const AuthPaypal = require("./AuthPaypal");
+const { BASE_URIS } = require("../../../presentation/Constants");
 
 module.exports = class PaymentsPaypal {
   constructor(request, client) {
