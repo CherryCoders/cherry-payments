@@ -41,7 +41,7 @@ module.exports = class PaymentsPaypal {
         ? BASE_URIS.paypal.sandbox
         : BASE_URIS.paypal.production
     }v1/`;
-    const response = await this.request.post(`/payments/payment/${payment_id}`);
+    const response = await this.request.get(`/payments/payment/${payment_id}`);
 
     this.request.defaults.baseURL = `${
       this.client.methods.paypal.sandbox
@@ -58,7 +58,7 @@ module.exports = class PaymentsPaypal {
         ? BASE_URIS.paypal.sandbox
         : BASE_URIS.paypal.production
     }v1/`;
-    const response = await this.request.post("/payments/payment");
+    const response = await this.request.get("/payments/payment");
 
     this.request.defaults.baseURL = `${
       this.client.methods.paypal.sandbox
