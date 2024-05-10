@@ -1,3 +1,4 @@
+const PaymentsPaypal = require("./util/PaymentPaypal");
 const Payouts = require("./util/PayoutsPaypal");
 const Shipping = require("./util/Shipping");
 
@@ -11,6 +12,7 @@ module.exports = class Paypal {
   init(request) {
     this.payouts = new Payouts(request, this.client);
     this.shipping = new Shipping(request, this.client);
+    this.payments = new PaymentsPaypal(request, this.client);
     return this;
   }
 };
