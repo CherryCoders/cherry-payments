@@ -73,21 +73,24 @@ const checkout = new Client({
   const merchant = await mercadopago.merchants.fetch("4463600701");
 
   // criar pagamento
-  const createPayment = await mercadopago.payments.create({
-    additional_info: {
-      items: [
-        {
-          id: "4462022673",
-          title: "teste produto",
-          description: "Descriçao do meu produto",
-          quantity: 1,
-          unit_price: 1,
-        },
-      ],
+  const createPayment = await mercadopago.payments.create(
+    {
+      additional_info: {
+        items: [
+          {
+            id: "4462022673",
+            title: "teste produto",
+            description: "Descriçao do meu produto",
+            quantity: 1,
+            unit_price: 1,
+          },
+        ],
+      },
+      payment_method_id: "visa",
+      transaction_amount: 1,
     },
-    payment_method_id: "visa",
-    transaction_amount: 1,
-  });
+    "X-Idempotency-Key aqui."
+  );
 
   // ======== FIM MERCADOPAGO
 
