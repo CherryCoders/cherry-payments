@@ -4,10 +4,12 @@ module.exports = class MercadoPagoRferences {
     this.client = client;
   }
 
-  async create(data, xIdempotencyKey) {
+  async create(data, xIdempotencyKey = false) {
     //X-Idempotency-Key
 
-    this.axios.defaults.headers["X-Idempotency-Key"] = xIdempotencyKey;
+    if (xIdempotencyKey)
+      this.axios.defaults.headers["X-Idempotency-Key"] = xIdempotencyKey;
+
     const request = await this.axios.post("/v1/payments", data);
     return request;
   }
