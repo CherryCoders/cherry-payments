@@ -1,4 +1,4 @@
-export class WebhooksPayPal {
+module.exports = class WebhooksPayPal {
   constructor(request, client) {
     this.request = request;
     this.client = client;
@@ -53,4 +53,4 @@ export class WebhooksPayPal {
     }v2/`;
     return response;
   }
-}
+};

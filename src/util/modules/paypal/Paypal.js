@@ -1,7 +1,7 @@
 const PaymentsPaypal = require("./util/PaymentPaypal");
 const Payouts = require("./util/PayoutsPaypal");
 const Shipping = require("./util/Shipping");
-const { WebhooksPayPal } = require("./util/WebhooksPaypal");
+const WebhooksPayPal = require("./util/WebhooksPaypal");
 
 module.exports = class Paypal {
   constructor(client) {
