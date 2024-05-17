@@ -1,3 +1,4 @@
+const { BASE_URIS } = require("../../../presentation/Constants");
 const AuthPaypal = require("./AuthPaypal");
 
 module.exports = class WebhooksPayPal {
