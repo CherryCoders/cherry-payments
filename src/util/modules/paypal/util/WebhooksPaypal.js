@@ -1,3 +1,5 @@
+const AuthPaypal = require("./AuthPaypal");
+
 module.exports = class WebhooksPayPal {
   constructor(request, client) {
     this.request = request;
